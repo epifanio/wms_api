@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+aioredis
+jinja2
+pydantic
+starlette
+owslib
+xarray[complete]
+netcdf4
+scipy
+bottleneck
+numbagg
+celery
+redis

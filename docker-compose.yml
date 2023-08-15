@@ -1,0 +1,36 @@
+version: '3'
+services:
+  app:
+    image: epinux/wms_api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DEBUG: 1
+      PYTHONUNBUFFERED: 1
+      LOGLEVEL: DEBUG
+      HDF5_USE_FILE_LOCKING: "FALSE"
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+    restart: unless-stopped
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    hostname: redis
+    volumes:
+      - redis-data:/data
+  # worker:
+  #   image: epinux/wms_api:latest
+  #   build: .
+  #   command: celery -A main.celery_app worker --loglevel=info
+  #   depends_on:
+  #     - redis
+volumes:
+  redis-data:
